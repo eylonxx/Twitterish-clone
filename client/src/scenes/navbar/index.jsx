@@ -91,7 +91,7 @@ const Navbar = () => {
               </MenuItem>
               <MenuItem
                 onClick={() => {
-                  dispatch(setLogout);
+                  dispatch(setLogout());
                 }}
               >
                 Log Out
