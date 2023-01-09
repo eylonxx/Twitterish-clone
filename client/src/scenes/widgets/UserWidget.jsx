@@ -47,6 +47,7 @@ const UserWidget = ({ userId, picturePath }) => {
               color={dark}
               fontWeight="500"
               sx={{
+                transition: 'color 0.1s',
                 '&:hover': {
                   color: palette.primary.light,
                   cursor: 'pointer',
@@ -58,7 +59,7 @@ const UserWidget = ({ userId, picturePath }) => {
             <Typography color={medium}>{friends.length} friends</Typography>
           </Box>
         </FlexBetween>
-        <ManageAccountsOutlined />
+        <ManageAccountsOutlined sx={{ cursor: 'pointer' }} />
       </FlexBetween>
 
       <Divider />
