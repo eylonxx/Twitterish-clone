@@ -8,6 +8,7 @@ import { setFriends } from 'state';
 const FriendListWidget = ({ userId }) => {
   const dispatch = useDispatch();
   const { palette } = useTheme();
+  const dark = palette.neutral.dark;
   const token = useSelector((state) => state.token);
   const friends = useSelector((state) => state.user.friends);
 
@@ -26,7 +27,9 @@ const FriendListWidget = ({ userId }) => {
 
   return (
     <WidgetWrapper color={palette.neutral.dark} variant="h5" fontWeight="500" sx={{ mb: '1.5rem' }}>
-      <Typography>Friend List</Typography>
+      <Typography color={dark} variant="h5" fontWeight="500">
+        Friend List
+      </Typography>
       <Box display="flex" flexDirection="column" gap="1.5rem">
         {friends.map((friend) => (
           <Friend
