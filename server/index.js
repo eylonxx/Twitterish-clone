@@ -62,7 +62,7 @@ mongoose
   .then(() => {
     app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
 
-    // SEED //
+    // SEED; //
     // User.insertMany(users);
     // Post.insertMany(posts);
   })
