@@ -11,7 +11,7 @@ import Friend from 'components/Friend';
 import WidgetWrapper from 'components/WidgetWrapper';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPost } from 'state';
+import { addComment, setPost } from 'state';
 import CommentWidget from './CommentWidget';
 
 const PostWidget = ({
@@ -33,7 +33,6 @@ const PostWidget = ({
   const isLiked = Boolean(likes[loggedInUserId]);
   const likeCount = Object.keys(likes).length;
   const [comment, setComment] = useState('');
-
   const { palette } = useTheme();
   const main = palette.neutral.main;
   const primary = palette.primary.main;
@@ -58,6 +57,8 @@ const PostWidget = ({
       body: JSON.stringify({ description: comment, userId: loggedInUserId, postId: postId }),
     });
     const newComment = await response.json();
+    console.log('new comment in widget', newComment);
+    dispatch(addComment({ comment: newComment }));
   };
 
   return (

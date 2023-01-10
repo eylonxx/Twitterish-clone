@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, current } from '@reduxjs/toolkit';
 
 const initialState = {
   mode: 'light',
@@ -39,8 +39,20 @@ export const authSlice = createSlice({
       });
       state.posts = updatedPosts;
     },
+    addComment: (state, action) => {
+      let indexOfPostToUpdate = current(state.posts).findIndex((post) => {
+        return post._id === action.payload.comment.parent._id;
+      });
+      let currentState = [...state.posts];
+      currentState[indexOfPostToUpdate].comments = [
+        ...currentState[indexOfPostToUpdate].comments,
+        action.payload.comment,
+      ];
+      let newState = [...currentState];
+      state.posts = newState;
+    },
   },
 });
 
-export const { setMode, setLogin, setLogout, setFriends, setPosts, setPost } = authSlice.actions;
+export const { setMode, setLogin, setLogout, setFriends, setPosts, setPost, addComment } = authSlice.actions;
 export default authSlice.reducer;

@@ -1,5 +1,4 @@
 import { Box, Typography, useTheme } from '@mui/material';
-import FlexBetween from 'components/FlexBetween';
 import UserImage from 'components/UserImage';
 import React from 'react';
 
