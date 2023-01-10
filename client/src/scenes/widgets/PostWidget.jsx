@@ -3,8 +3,9 @@ import {
   FavoriteBorderOutlined,
   FavoriteOutlined,
   ShareOutlined,
+  CommentOutlined,
 } from '@mui/icons-material';
-import { Box, Divider, IconButton, Typography, useTheme } from '@mui/material';
+import { Box, Divider, IconButton, InputBase, Typography, useTheme } from '@mui/material';
 import FlexBetween from 'components/FlexBetween';
 import Friend from 'components/Friend';
 import WidgetWrapper from 'components/WidgetWrapper';
@@ -30,6 +31,7 @@ const PostWidget = ({
   const loggedInUserId = useSelector((state) => state.user._id);
   const isLiked = Boolean(likes[loggedInUserId]);
   const likeCount = Object.keys(likes).length;
+  const [comment, setComment] = useState('');
 
   const { palette } = useTheme();
   const main = palette.neutral.main;
@@ -50,7 +52,12 @@ const PostWidget = ({
 
   return (
     <WidgetWrapper m={isHome ? '2rem 0' : '0 0 1rem 0'}>
-      <Friend friendId={postUserId} name={name} subtitle={location} userPicturePath={userPicturePath} />
+      <FlexBetween>
+        <Friend friendId={postUserId} name={name} subtitle={location} userPicturePath={userPicturePath} />
+        <IconButton>
+          <ShareOutlined />
+        </IconButton>
+      </FlexBetween>
       <Typography color={main} sx={{ mt: '1rem' }}>
         {description}
       </Typography>
@@ -79,9 +86,24 @@ const PostWidget = ({
             <Typography>{comments.length}</Typography>
           </FlexBetween>
         </FlexBetween>
-
+      </FlexBetween>
+      <FlexBetween mt="0.5rem">
+        <InputBase
+          placeholder="Write a comment..."
+          multiline
+          onChange={(e) => setComment(e.target.value)}
+          value={comment}
+          sx={{
+            marginRight: '0.5rem',
+            fontSize: '0.75rem',
+            width: '100%',
+            backgroundColor: palette.neutral.light,
+            borderRadius: '0.5rem',
+            padding: '0.5rem 1rem',
+          }}
+        />
         <IconButton>
-          <ShareOutlined />
+          <CommentOutlined />
         </IconButton>
       </FlexBetween>
       {isComments && (
