@@ -1,5 +1,5 @@
 import express from 'express';
-import { getFeedPosts, getUserPosts, likePost } from '../controllers/posts.js';
+import { createComment, getFeedPosts, getUserPosts, likePost } from '../controllers/posts.js';
 
 import { verifyToken } from '../middleware/auth.js';
 
@@ -13,3 +13,6 @@ router.get('/:userId', verifyToken, getUserPosts);
 // UPDATE //
 router.patch('/:id/like', verifyToken, likePost);
 export default router;
+
+// CREATE //
+router.post('/:id/comment', verifyToken, createComment);

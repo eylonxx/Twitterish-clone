@@ -7,6 +7,7 @@ export const createPost = async (req, res) => {
     const { userId, description, picturePath } = req.body;
     const user = await User.findById(userId);
     const newPost = new Post({
+      parent: null,
       userId,
       firstName: user.firstName,
       lastName: user.lastName,
@@ -26,10 +27,38 @@ export const createPost = async (req, res) => {
   }
 };
 
+export const createComment = async (req, res) => {
+  try {
+    const { userId, postId, description, picturePath } = req.body;
+    const user = await User.findById(userId);
+    const post = await Post.findById(postId);
+    const newPost = new Post({
+      parent: post,
+      userId,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      location: user.location,
+      description,
+      userPicturePath: user.picturePath,
+      picturePath,
+      likes: {},
+      comments: [],
+    });
+    const comment = await newPost.save();
+    post.comments.push(comment._id);
+    await post.save();
+    res.status(201).json(comment);
+  } catch (err) {
+    res.status(409).json({ message: err.message });
+  }
+};
+
 /* READ */
 export const getFeedPosts = async (req, res) => {
   try {
-    const post = await Post.find().sort({ createdAt: -1 });
+    const post = await Post.find({ parent: null })
+      .sort({ createdAt: -1 })
+      .populate({ path: 'comments', populate: { path: 'userId' } });
     res.status(200).json(post);
   } catch (err) {
     res.status(404).json({ message: err.message });
@@ -39,7 +68,7 @@ export const getFeedPosts = async (req, res) => {
 export const getUserPosts = async (req, res) => {
   try {
     const { userId } = req.params;
-    const post = await Post.find({ userId }).sort({ createdAt: -1 });
+    const post = await Post.find({ userId, parent: null }).sort({ createdAt: -1 });
     res.status(200).json(post);
   } catch (err) {
     res.status(404).json({ message: err.message });

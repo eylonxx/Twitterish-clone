@@ -12,6 +12,7 @@ import WidgetWrapper from 'components/WidgetWrapper';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPost } from 'state';
+import CommentWidget from './CommentWidget';
 
 const PostWidget = ({
   isHome,
@@ -50,6 +51,15 @@ const PostWidget = ({
     dispatch(setPost({ post: updatedPost }));
   };
 
+  const createComment = async () => {
+    const response = await fetch(`http://localhost:3001/posts/${postId}/comment`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ description: comment, userId: loggedInUserId, postId: postId }),
+    });
+    const newComment = await response.json();
+  };
+
   return (
     <WidgetWrapper m={isHome ? '2rem 0' : '0 0 1rem 0'}>
       <FlexBetween>
@@ -58,7 +68,7 @@ const PostWidget = ({
           <ShareOutlined />
         </IconButton>
       </FlexBetween>
-      <Typography color={main} sx={{ mt: '1rem' }}>
+      <Typography color={main} sx={{ mt: '1rem', ml: '0.5rem' }}>
         {description}
       </Typography>
       {picturePath && (
@@ -102,18 +112,20 @@ const PostWidget = ({
             padding: '0.5rem 1rem',
           }}
         />
-        <IconButton>
+        <IconButton onClick={() => createComment()}>
           <CommentOutlined />
         </IconButton>
       </FlexBetween>
       {isComments && (
         <Box mt="0.5rem">
-          {comments.map((comment, i) => (
-            <Box key={`${name}-${i}`}>
-              <Divider />
-              <Typography sx={{ color: main, m: '0.5rem 0', pl: '1rem' }}>{comment}</Typography>
-            </Box>
-          ))}
+          {comments.map((comment, i) => {
+            return (
+              <Box key={`${name}-${i}`}>
+                <Divider />
+                <CommentWidget comment={comment} />
+              </Box>
+            );
+          })}
           <Divider />
         </Box>
       )}
