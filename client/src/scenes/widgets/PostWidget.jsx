@@ -59,6 +59,7 @@ const PostWidget = ({
     const newComment = await response.json();
     console.log('new comment in widget', newComment);
     dispatch(addComment({ comment: newComment }));
+    setIsComments(true);
   };
 
   return (
@@ -113,7 +114,7 @@ const PostWidget = ({
             padding: '0.5rem 1rem',
           }}
         />
-        <IconButton onClick={() => createComment()}>
+        <IconButton disabled={!comment.length} onClick={() => createComment()}>
           <CommentOutlined />
         </IconButton>
       </FlexBetween>

@@ -11,6 +11,7 @@ const CommentWidget = ({ comment }) => {
     const currTime = Date.now();
     const createdAtTime = new Date(comment.createdAt).getTime();
     let timeAgo = (currTime - createdAtTime) / 1000;
+    if (timeAgo < 60) return 'now';
     if (timeAgo < 3600) return `${Math.floor(timeAgo / 60)}m ago`;
     if (timeAgo < 86400) return `${Math.floor(timeAgo / 3600)}h ago`;
     return comment.createdAt.slice(0, 10).split('-').reverse().join('-');
