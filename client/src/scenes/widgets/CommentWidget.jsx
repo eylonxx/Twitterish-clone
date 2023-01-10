@@ -15,10 +15,10 @@ const CommentWidget = ({ comment }) => {
     if (timeAgo < 86400) return `${Math.floor(timeAgo / 3600)}h ago`;
     return comment.createdAt.slice(0, 10).split('-').reverse().join('-');
   };
-
+  console.log(comment);
   return (
     <Box display="flex" mt="0.25rem">
-      <UserImage image={comment.userId.picturePath} size="25px" />
+      <UserImage image={comment.userPicturePath} size="25px" />
       <Box display="flex" flexDirection="column">
         <Typography sx={{ color: primary, pl: '0.5rem' }}>{comment.description}</Typography>
         <Typography sx={{ color: main, fontSize: '0.5rem', pl: '0.5rem' }}>{getTimeAgo()}</Typography>

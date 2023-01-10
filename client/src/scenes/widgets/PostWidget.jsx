@@ -54,7 +54,7 @@ const PostWidget = ({
     const response = await fetch(`http://localhost:3001/posts/${postId}/comment`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ description: comment, userId: loggedInUserId, postId: postId }),
+      body: JSON.stringify({ description: comment, userId: loggedInUserId, postId: postId, picturePath: picturePath }),
     });
     const newComment = await response.json();
     console.log('new comment in widget', newComment);
