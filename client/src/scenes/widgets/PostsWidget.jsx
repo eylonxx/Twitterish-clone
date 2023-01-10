@@ -1,3 +1,4 @@
+import PostWidgetSkeletonLoader from 'components/PostWidgetSkeletonLoader';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPosts } from 'state';
@@ -33,7 +34,15 @@ const PostsWidget = ({ userId, isProfile = false, isHome = false }) => {
       getPosts();
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
+  if (posts.length === '0') {
+    return (
+      <>
+        <PostWidgetSkeletonLoader />
+        <PostWidgetSkeletonLoader />
+        <PostWidgetSkeletonLoader />
+      </>
+    );
+  }
   return (
     <>
       {posts.map(
