@@ -59,17 +59,15 @@ const PostWidget = ({
     const newComment = await response.json();
     console.log('new comment in widget', newComment);
     dispatch(addComment({ comment: newComment }));
+    setComment('');
     setIsComments(true);
   };
 
   return (
     <WidgetWrapper m={isHome ? '2rem 0' : '0 0 1rem 0'}>
-      <FlexBetween>
+      <Box>
         <Friend friendId={postUserId} name={name} subtitle={location} userPicturePath={userPicturePath} />
-        <IconButton>
-          <ShareOutlined />
-        </IconButton>
-      </FlexBetween>
+      </Box>
       <Typography color={main} sx={{ mt: '1rem', ml: '0.5rem' }}>
         {description}
       </Typography>
@@ -90,7 +88,6 @@ const PostWidget = ({
             </IconButton>
             <Typography>{likeCount}</Typography>
           </FlexBetween>
-
           <FlexBetween gap="0.3rem">
             <IconButton onClick={() => setIsComments(!isComments)}>
               <ChatBubbleOutlineOutlined />
@@ -98,6 +95,9 @@ const PostWidget = ({
             <Typography>{comments.length}</Typography>
           </FlexBetween>
         </FlexBetween>
+        <IconButton>
+          <ShareOutlined />
+        </IconButton>
       </FlexBetween>
       <FlexBetween mt="0.5rem">
         <InputBase
