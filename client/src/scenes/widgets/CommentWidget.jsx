@@ -19,15 +19,16 @@ const CommentWidget = ({ comment }) => {
     if (timeAgo < 86400) return `${Math.floor(timeAgo / 3600)}h ago`;
     return comment.createdAt.slice(0, 10).split('-').reverse().join('-');
   };
-  console.log(comment);
   return (
-    <Box display="flex" mt="0.25rem">
-      <UserImage image={comment.userPicturePath} size="25px" />
-      <Link component={RouterLink} to={`/profile/${comment.userId._id}`}>
-        {comment.firstName} {comment.lastName}
-      </Link>
+    <Box display="flex" mt="0.25rem" width="100%">
+      <Box display="flex" alignItems="top">
+        <UserImage image={comment.userPicturePath} size="25px" />
+        <Link sx={{ textDecoration: 'none' }} color={main} component={RouterLink} to={`/profile/${comment.userId._id}`}>
+          {comment.firstName} {comment.lastName}
+        </Link>
+      </Box>
       <Box display="flex" flexDirection="column">
-        <Typography sx={{ color: primary, pl: '0.5rem' }}>{comment.description}</Typography>
+        <Typography sx={{ color: primary, pl: '0.5rem', overflow: 'auto' }}>{comment.description}</Typography>
         <Typography sx={{ color: main, fontSize: '0.5rem', pl: '0.5rem' }}>{getTimeAgo()}</Typography>
       </Box>
     </Box>

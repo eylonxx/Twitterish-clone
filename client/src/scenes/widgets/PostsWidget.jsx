@@ -1,3 +1,4 @@
+import { Box } from '@mui/material';
 import PostWidgetSkeletonLoader from 'components/PostWidgetSkeletonLoader';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -44,7 +45,7 @@ const PostsWidget = ({ userId, isProfile = false, isHome = false }) => {
     );
   }
   return (
-    <>
+    <Box>
       {posts.map(
         (
           { _id, userId, firstName, lastName, description, location, picturePath, userPicturePath, likes, comments },
@@ -66,7 +67,7 @@ const PostsWidget = ({ userId, isProfile = false, isHome = false }) => {
           />
         )
       )}
-    </>
+    </Box>
   );
 };
 
